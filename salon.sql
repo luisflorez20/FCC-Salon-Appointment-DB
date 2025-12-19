@@ -178,6 +178,10 @@ INSERT INTO public.appointments VALUES (2, 2, 1, '11am');
 INSERT INTO public.appointments VALUES (3, 3, 1, '');
 INSERT INTO public.appointments VALUES (4, 1, 1, '11am');
 INSERT INTO public.appointments VALUES (5, 4, 1, '');
+INSERT INTO public.appointments VALUES (12, 1, 1, 'Fabio');
+INSERT INTO public.appointments VALUES (13, 1, 5, '');
+INSERT INTO public.appointments VALUES (14, 1, 1, '10.30');
+INSERT INTO public.appointments VALUES (15, 1, 2, '11am');
 
 
 --
@@ -205,7 +209,7 @@ INSERT INTO public.services VALUES (5, 'trim');
 -- Name: appointments_appointment_id_seq; Type: SEQUENCE SET; Schema: public; Owner: freecodecamp
 --
 
-SELECT pg_catalog.setval('public.appointments_appointment_id_seq', 11, true);
+SELECT pg_catalog.setval('public.appointments_appointment_id_seq', 15, true);
 
 
 --

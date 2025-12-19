@@ -2,8 +2,8 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 12.22 (Ubuntu 12.22-0ubuntu0.20.04.4)
--- Dumped by pg_dump version 12.22 (Ubuntu 12.22-0ubuntu0.20.04.4)
+-- Dumped from database version 12.9 (Ubuntu 12.9-2.pgdg20.04+1)
+-- Dumped by pg_dump version 12.9 (Ubuntu 12.9-2.pgdg20.04+1)
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -49,9 +49,9 @@ SET default_table_access_method = heap;
 
 CREATE TABLE public.appointments (
     appointment_id integer NOT NULL,
-    customer_id integer NOT NULL,
-    service_id integer NOT NULL,
-    "time" character varying(10) NOT NULL
+    "time" character varying(255),
+    service_id integer,
+    customer_id integer
 );
 
 
@@ -85,8 +85,8 @@ ALTER SEQUENCE public.appointments_appointment_id_seq OWNED BY public.appointmen
 
 CREATE TABLE public.customers (
     customer_id integer NOT NULL,
-    phone character varying(15) NOT NULL,
-    name character varying(50) NOT NULL
+    phone character varying(30),
+    name character varying(255)
 );
 
 
@@ -120,7 +120,7 @@ ALTER SEQUENCE public.customers_customer_id_seq OWNED BY public.customers.custom
 
 CREATE TABLE public.services (
     service_id integer NOT NULL,
-    name character varying(50) NOT NULL
+    name character varying(255)
 );
 
 
@@ -173,64 +173,65 @@ ALTER TABLE ONLY public.services ALTER COLUMN service_id SET DEFAULT nextval('pu
 -- Data for Name: appointments; Type: TABLE DATA; Schema: public; Owner: freecodecamp
 --
 
-INSERT INTO public.appointments VALUES (1, 1, 1, '10:30');
-INSERT INTO public.appointments VALUES (2, 2, 1, '11am');
-INSERT INTO public.appointments VALUES (3, 3, 1, '');
-INSERT INTO public.appointments VALUES (4, 1, 1, '11am');
-INSERT INTO public.appointments VALUES (5, 4, 1, '');
-INSERT INTO public.appointments VALUES (12, 1, 1, 'Fabio');
-INSERT INTO public.appointments VALUES (13, 1, 5, '');
-INSERT INTO public.appointments VALUES (14, 1, 1, '10.30');
-INSERT INTO public.appointments VALUES (15, 1, 2, '11am');
-INSERT INTO public.appointments VALUES (16, 10, 5, 'yes');
-INSERT INTO public.appointments VALUES (17, 1, 1, 'Fabio');
-INSERT INTO public.appointments VALUES (18, 11, 1, '');
-INSERT INTO public.appointments VALUES (19, 1, 1, '11am');
-INSERT INTO public.appointments VALUES (20, 1, 2, '11am');
+INSERT INTO public.appointments VALUES (75, '', 1, 10);
+INSERT INTO public.appointments VALUES (5, '', 1, 10);
+INSERT INTO public.appointments VALUES (12, '', 1, 10);
+INSERT INTO public.appointments VALUES (82, '', 1, 10);
+INSERT INTO public.appointments VALUES (87, '10pm', 3, 6);
+INSERT INTO public.appointments VALUES (19, '', 1, 10);
+INSERT INTO public.appointments VALUES (24, '4pm', 1, 5);
+INSERT INTO public.appointments VALUES (27, '', 1, 10);
+INSERT INTO public.appointments VALUES (32, '3pm', 3, 4);
+INSERT INTO public.appointments VALUES (35, '', 1, 10);
+INSERT INTO public.appointments VALUES (42, '', 1, 10);
+INSERT INTO public.appointments VALUES (49, '', 1, 10);
+INSERT INTO public.appointments VALUES (56, '', 1, 10);
+INSERT INTO public.appointments VALUES (61, '6pm', 1, 5);
+INSERT INTO public.appointments VALUES (67, '', 1, 10);
 
 
 --
 -- Data for Name: customers; Type: TABLE DATA; Schema: public; Owner: freecodecamp
 --
 
-INSERT INTO public.customers VALUES (1, '555-555-5555', 'Fabio');
-INSERT INTO public.customers VALUES (2, '2', '555-555-5555');
-INSERT INTO public.customers VALUES (3, '', '');
-INSERT INTO public.customers VALUES (4, '10', '');
-INSERT INTO public.customers VALUES (10, 'Fabio', '555-555-5555');
-INSERT INTO public.customers VALUES (11, '555-', '');
+INSERT INTO public.customers VALUES (2, '111-1111', 'Landon');
+INSERT INTO public.customers VALUES (3, '222-2222', 'george');
+INSERT INTO public.customers VALUES (4, '333-3333', 'yeet');
+INSERT INTO public.customers VALUES (5, '444-4444', 'Tyler');
+INSERT INTO public.customers VALUES (6, '666-6666', 'Hick');
+INSERT INTO public.customers VALUES (7, '999-9999', 'Fred');
+INSERT INTO public.customers VALUES (10, '', '');
+INSERT INTO public.customers VALUES (24, '888-8888', 'Jim');
 
 
 --
 -- Data for Name: services; Type: TABLE DATA; Schema: public; Owner: freecodecamp
 --
 
-INSERT INTO public.services VALUES (1, 'cut');
-INSERT INTO public.services VALUES (2, 'color');
-INSERT INTO public.services VALUES (3, 'perm');
-INSERT INTO public.services VALUES (4, 'style');
-INSERT INTO public.services VALUES (5, 'trim');
+INSERT INTO public.services VALUES (1, 'Haircut');
+INSERT INTO public.services VALUES (2, 'Shave');
+INSERT INTO public.services VALUES (3, 'Pedicure');
 
 
 --
 -- Name: appointments_appointment_id_seq; Type: SEQUENCE SET; Schema: public; Owner: freecodecamp
 --
 
-SELECT pg_catalog.setval('public.appointments_appointment_id_seq', 20, true);
+SELECT pg_catalog.setval('public.appointments_appointment_id_seq', 87, true);
 
 
 --
 -- Name: customers_customer_id_seq; Type: SEQUENCE SET; Schema: public; Owner: freecodecamp
 --
 
-SELECT pg_catalog.setval('public.customers_customer_id_seq', 11, true);
+SELECT pg_catalog.setval('public.customers_customer_id_seq', 82, true);
 
 
 --
 -- Name: services_service_id_seq; Type: SEQUENCE SET; Schema: public; Owner: freecodecamp
 --
 
-SELECT pg_catalog.setval('public.services_service_id_seq', 5, true);
+SELECT pg_catalog.setval('public.services_service_id_seq', 3, true);
 
 
 --
@@ -266,22 +267,21 @@ ALTER TABLE ONLY public.services
 
 
 --
--- Name: appointments appointments_customer_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: freecodecamp
+-- Name: appointments appointment_customer; Type: FK CONSTRAINT; Schema: public; Owner: freecodecamp
 --
 
 ALTER TABLE ONLY public.appointments
-    ADD CONSTRAINT appointments_customer_id_fkey FOREIGN KEY (customer_id) REFERENCES public.customers(customer_id);
+    ADD CONSTRAINT appointment_customer FOREIGN KEY (customer_id) REFERENCES public.customers(customer_id);
 
 
 --
--- Name: appointments appointments_service_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: freecodecamp
+-- Name: appointments appointment_service; Type: FK CONSTRAINT; Schema: public; Owner: freecodecamp
 --
 
 ALTER TABLE ONLY public.appointments
-    ADD CONSTRAINT appointments_service_id_fkey FOREIGN KEY (service_id) REFERENCES public.services(service_id);
+    ADD CONSTRAINT appointment_service FOREIGN KEY (service_id) REFERENCES public.services(service_id);
 
 
 --
 -- PostgreSQL database dump complete
 --
-
